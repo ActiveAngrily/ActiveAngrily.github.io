@@ -1,5 +1,5 @@
 const $ = (id) => document.getElementById(id);
-const route = location.pathname.split('/').filter(Boolean)[1] || 'work';
+const route = location.pathname.split('/').filter(Boolean)[0] || 'work';
 document.querySelector(`[data-nav="${route}"]`)?.setAttribute('aria-current', 'page');
 const updateClock = () => {
   const now = new Date();
