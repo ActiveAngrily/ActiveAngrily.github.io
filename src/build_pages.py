@@ -118,6 +118,23 @@ pages["work/latent-diffusion"] = (
 </article>''',
 )
 
+pages["work/borrower-copilot"] = (
+    "borrower copilot",
+    "A private, adaptive borrowing self-assessment for Indian borrowers.",
+    '''<article class="case-study borrower-copilot">
+<a class="back-link top-back" href="/">← all work</a>
+<span class="section-label case-category">project · financial wellbeing</span>
+<h1>borrower copilot</h1>
+<p class="case-note">build challenge · september 2026</p>
+<div class="project-links"><a class="pill" href="https://anantjamuar.me/borrower_copilot/" target="_blank" rel="noreferrer">try it ↗</a><a class="pill" href="https://github.com/ActiveAngrily/borrower_copilot" target="_blank" rel="noreferrer">view the code ↗</a></div>
+<section class="detail-section"><h2>abstract</h2>
+<p>borrower copilot is a private, adaptive self-assessment for indian borrowers. it keeps likely lender access separate from what a household can safely repay, preserves unknowns instead of guessing, stress-tests affordability, and turns the result into a printable negotiation card.</p></section>
+<section class="detail-section"><h2>decision science principles</h2>
+<dl class="project-evidence"><div><dt>missing data stays explicit</dt><dd>unknown ≠ zero</dd></div><div><dt>affordability comes first</dt><dd>stress before optimism</dd></div><div><dt>outputs stay separate</dt><dd>capacity ≠ lender access</dd></div><div><dt>future earnings remain future</dt><dd>projected ≠ current</dd></div></dl></section>
+<a class="next-project" href="/work/latent-diffusion/"><span>next project →</span><strong>growing synthetic tumours in latent space</strong></a>
+</article>''',
+)
+
 for path, (title, description, body) in pages.items():
     page = shell.replace("<body>", '<body class="detail">')
     page = re.sub(r"<title>.*?</title>", f"<title>{title} · anant jamuar</title>", page)
