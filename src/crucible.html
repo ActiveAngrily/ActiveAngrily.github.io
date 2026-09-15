@@ -1,0 +1,30 @@
+<article class="case-study crucible">
+<a class="back-link top-back" href="/">← all work</a>
+<h1 class="project-heading"><i class="crucible-logo" aria-hidden="true"></i>crucible</h1>
+<p class="case-intro">a real-time security system that watches a vehicle’s internal network for unusual activity and possible attacks.</p>
+<p class="case-note">personal project · november 2025 to present<br>initial build completed january 2026</p>
+<div class="project-links"><a class="pill" href="https://github.com/activeangrily/crucible" target="_blank" rel="noreferrer">view the code ↗</a></div>
+<figure class="project-visual"><img class="crucible-cover" src="/assets/crucible-card.png" alt="Crucible — Forging resilient autonomy with generative AI. December 2025 cover with a white Crucible logo and colorful halftone patterns on black." width="6000" height="3375"><figcaption>crucible · december 2025</figcaption></figure>
+<section class="detail-section"><h2>why i built it</h2>
+<p>modern vehicles constantly exchange data about steering, speed, braking, and other controls. if someone sends a fake message into that network, the vehicle needs to detect it quickly enough to respond.</p>
+<p>i built crucible to explore how machine learning could catch those attacks directly on hardware inside the vehicle. it works with comma.ai’s openpilot platform and panda obd-ii interface, watching live can bus data for packet spoofing, unusual steering commands, and attempts to take control of the vehicle.</p></section>
+<section class="detail-section"><h2>how it works</h2>
+<p>crucible monitors 11 vehicle signals at once. it reads them in short windows of 50 time steps, which gives the model enough context to notice when the vehicle’s behaviour suddenly changes.</p>
+<p>the detection model is a temporal convolutional network built for time-series data. it compares incoming telemetry with the patterns it learned from normal driving. if the error moves too far from the baseline mse of 0.3101, the system treats the activity as suspicious.</p>
+<p>each prediction takes less than 15 milliseconds on edge hardware. i used torchscript and core ml with fp16 precision to keep inference fast enough to run inside the vehicle without relying on a remote server.</p></section>
+<section class="detail-section"><h2>building the test environment</h2>
+<p>testing this safely required a simulated vehicle.</p>
+<p>carla runs on macos and handles the driving simulation. a linux container runs ros, receives the live telemetry, and passes it to the detection model over a virtual network connection.</p>
+<p>i also built a dashboard with three risk levels. as the telemetry becomes more unusual, the dashboard raises the alert level so the system can respond based on the severity of the event.</p></section>
+<section class="detail-section"><h2>testing attacks</h2>
+<p>normal driving data was only part of the test. i needed to see what happened when the incoming data was deliberately wrong.</p>
+<p>i built a fault-injection suite that sends hostile can packets, changes packet timing, and inserts fake steering commands. this exposed cases where the model performed well on familiar data but struggled when an attack changed the shape or timing of the signals.</p>
+<p>those tests helped me tune the alert thresholds and check how the full pipeline behaved under pressure.</p></section>
+<section class="detail-section"><h2>what i learned</h2>
+<p>getting the model below 15 milliseconds was useful, but inference speed was only one part of the latency budget. memory allocation, thread scheduling, telemetry delivery, and alert handling could still slow the system down.</p>
+<p>crucible taught me to measure the entire path from incoming signal to visible alert. it also made fault injection a normal part of my testing process, especially for systems that may eventually interact with real hardware.</p></section>
+<section class="detail-section"><h2>built with</h2>
+<ul class="tech-stack"><li><img src="/assets/tech/python.svg" alt="" width="22" height="22" loading="lazy"><span>python</span></li><li><img src="/assets/tech/cplusplus.svg" alt="" width="22" height="22" loading="lazy"><span>c++</span></li><li><img src="/assets/tech/pytorch.svg" alt="" width="22" height="22" loading="lazy"><span>pytorch</span></li><li><img src="/assets/tech/pytorch.svg" alt="" width="22" height="22" loading="lazy"><span>torchscript</span></li><li><img src="/assets/tech/apple.svg" alt="" width="22" height="22" loading="lazy"><span>core ml</span></li><li><img src="/assets/tech/ros.svg" alt="" width="22" height="22" loading="lazy"><span>ros melodic</span></li><li><span class="tech-monogram" aria-hidden="true">c</span><span>carla</span></li><li><img src="/assets/tech/docker.svg" alt="" width="22" height="22" loading="lazy"><span>docker</span></li><li><img src="/assets/tech/comma.svg" alt="" width="22" height="22" loading="lazy"><span>openpilot</span></li><li><img src="/assets/tech/comma.svg" alt="" width="22" height="22" loading="lazy"><span>panda obd-ii</span></li></ul></section>
+
+<a class="next-project" href="/work/latent-diffusion/"><span>next experiment →</span><strong>growing synthetic tumours in latent space</strong></a>
+</article>
