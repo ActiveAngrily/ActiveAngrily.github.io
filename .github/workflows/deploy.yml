@@ -1,0 +1,65 @@
+name: Build and deploy portfolio
+
+on:
+  push:
+    branches: [main, redesign-minimal]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Install dependencies
+        run: npm ci
+      - name: Check types
+        run: npm run typecheck
+      - name: Build static site
+        run: npm run build
+      - name: Package downloadable site
+        working-directory: out
+        run: zip -qr "$RUNNER_TEMP/portfolio-static.zip" .
+      - name: Upload downloadable site
+        uses: actions/upload-artifact@v4
+        with:
+          name: portfolio-static
+          path: ${{ runner.temp }}/portfolio-static.zip
+          retention-days: 30
+          if-no-files-found: error
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: out
+          retention-days: 30
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: portfolio-pages
+      cancel-in-progress: false
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

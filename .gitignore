@@ -1,4 +1,7 @@
-
-__pycache__/
-
-.github-token
+node_modules/
+.next/
+out/
+.DS_Store
+*.tsbuildinfo
+.env*.local
+dist/

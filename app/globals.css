@@ -1,0 +1,81 @@
+:root {
+  --background: #e8eff5;
+  --foreground: #5b626a;
+  --accent: #4e7395;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; min-height: 100%; }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-instrument-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  font-weight: 480;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; text-decoration: none; }
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 7px;
+  border-radius: 2px;
+}
+
+/* The background stays fixed; the portfolio remains in document flow. */
+.spotlight { position: fixed; inset: 0; isolation: isolate; overflow: hidden; min-height: 100dvh; }
+.spotlight-layers { position: absolute; inset: 0; pointer-events: none; }
+.spotlight-layers > div { position: absolute; inset: 0; }
+.interactive-dots { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.site-header { position: absolute; inset: 0 0 auto; padding: 32px 24px; z-index: 2; }
+.site-header nav { display: flex; justify-content: center; align-items: center; gap: 24px; }
+.site-header a { color: #69717a; }
+.site-header a[aria-current="page"], .site-header a:hover { color: #202a35; }
+.site-header a:not([aria-current]) .annotated-text svg { opacity: 0.65; }
+.site-header a:hover .annotated-text svg { opacity: 1; }
+.site-signature { position: fixed; right: 24px; bottom: 24px; color: #627b90; font-size: 12px; z-index: 2; }
+
+.intro { position: relative; display: grid; place-items: center; min-height: 100dvh; padding: 80px 24px; }
+.intro p { width: 100%; margin: 0; text-align: justify; }
+.portfolio-composition { width: min(24rem, 100%); min-width: 0; margin-inline: auto; }
+.artwork { height: clamp(160px, 30dvh, 240px); width: 100%; margin-bottom: 22px; }
+.particle-canvas { width: 100%; height: 100%; }
+.artwork-fallback { width: 100%; height: 100%; object-fit: contain; }
+.section-stage { min-width: 0; }
+.name { color: #202a35; }
+.project-phrase { white-space: nowrap; }
+.project-link { white-space: nowrap; color: #344f68; }
+.inline-brand-mark { display: inline-block; object-fit: contain; vertical-align: -3px; margin-right: 4px; }
+
+.annotated-text { position: relative; display: inline-block; white-space: nowrap; }
+.annotation-label { position: relative; z-index: 1; }
+.annotated-text svg { position: absolute; pointer-events: none; color: var(--accent); left: -1%; bottom: -0.45em; width: 102%; height: 0.65em; }
+.annotation-arrow svg { width: 106%; height: 0.8em; }
+.annotation-highlight { isolation: isolate; }
+.annotation-highlight svg { left: -4%; bottom: -0.08em; height: 1.15em; width: 108%; z-index: 0; }
+.red-letter .annotated-text svg { color: #f3ced6; opacity: 0.85; }
+.curieon .annotated-text svg { color: #cddce7; opacity: 0.85; }
+.project-link:hover .annotated-text svg { opacity: 1; }
+.location .annotation-highlight svg { color: #cddce7; opacity: 0.22; }
+
+.elsewhere { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 7px; row-gap: 12px; margin-top: 24px; font-size: 12px; }
+.elsewhere-label { color: #76838e; }
+.social-link { display: inline-flex; color: #4e667c; white-space: nowrap; }
+.social-link .annotated-text svg { opacity: 0.45; height: 0.4em; }
+.social-link:hover { color: #202a35; }
+.social-link:hover .annotated-text svg { opacity: 1; }
+.social-separator { color: #8996a1; }
+.contact-email-line { margin-top: 22px; }
+.contact-address { display: inline-block; color: #344f68; }
+.contact-soft-highlight .annotation-highlight svg { color: #cddce7; opacity: 0.3; }
+.contact-content .elsewhere { margin-top: 28px; }
+
+@media (max-width: 600px) {
+  .site-header { padding-top: 28px; }
+  .site-signature { bottom: 18px; }
+  .intro { padding-block: 80px; }
+  .artwork { height: clamp(140px, 27dvh, 200px); margin-bottom: 16px; }
+  .elsewhere-label { flex-basis: 100%; }
+  .elsewhere { column-gap: 6px; font-size: 11px; row-gap: 8px; }
+}

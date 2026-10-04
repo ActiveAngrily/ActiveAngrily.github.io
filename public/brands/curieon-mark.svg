@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="44 40 432 432" role="img" aria-labelledby="logo-title logo-description">
+  <title id="logo-title">Curieon — Machined Diamond icon for light backgrounds</title><desc id="logo-description">A heavy diamond aperture opens to a separate clipped rhombus, marking a measured discovery.</desc><g id="icon">
+    <path id="open-aperture" fill="#0B0D12" d="M368 192L248 72L64 256L248 440L368 320L320 272L248 344L160 256L248 168L320 240Z" />
+    <path id="registration-facet" fill="#555B66" d="M412 216H420L456 252V260L420 296H412L376 260V252Z" />
+  </g>
+</svg>
