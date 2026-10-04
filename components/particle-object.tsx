@@ -185,6 +185,8 @@ const DEFAULTS: Required<ParticleObjectOptions> = {
 const CAMERA_DIR = new THREE.Vector3(0, -1, 4).normalize();
 const MODEL_LIFT = 0.3;
 const RASTER_SIZE = 420;
+// Settings are calibrated to the desktop artwork's 240 CSS pixel height.
+const REFERENCE_HEIGHT = 240;
 
 const VERT = `
 in vec3 aColor;
@@ -196,6 +198,7 @@ uniform float uDrift;
 uniform float uSize;
 uniform float uVariance;
 uniform float uDpr;
+uniform float uViewportScale;
 uniform float uRefDist;
 uniform vec3 uTint;
 uniform float uUseTint;
@@ -211,7 +214,7 @@ void main() {
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   float jitter = 1.0 + uVariance * (fract(aSeed * 7.13) - 0.5) * 1.4;
   gl_PointSize = clamp(
-    uSize * uDpr * jitter * (uRefDist / max(-mv.z, 0.1)), 0.0, 64.0);
+    uSize * uViewportScale * uDpr * jitter * (uRefDist / max(-mv.z, 0.1)), 0.0, 64.0);
   vColor = mix(aColor, uTint * aShade, uUseTint);
   gl_Position = projectionMatrix * mv;
 }`;
@@ -377,6 +380,7 @@ export function createParticleObject(
       uSize: { value: config.size },
       uVariance: { value: config.sizeVariance },
       uDpr: { value: 1 },
+      uViewportScale: { value: 1 },
       uRefDist: { value: config.cameraDistance },
       uTint: { value: new THREE.Color(1, 1, 1) },
       uUseTint: { value: 0 },
@@ -516,6 +520,7 @@ export function createParticleObject(
     renderer.setPixelRatio(pr);
     renderer.setSize(width, height, false);
     material.uniforms.uDpr.value = pr;
+    material.uniforms.uViewportScale.value = height / REFERENCE_HEIGHT;
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
     renderer.render(scene, camera);
@@ -623,9 +628,10 @@ export function createParticleObject(
           camera.position.distanceTo(floatGroup.position) *
           Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2)) /
         height;
-      localRadius = (Math.max(config.radius, 1) * worldPerPx) / worldScale;
+      const viewportScale = height / REFERENCE_HEIGHT;
+      localRadius = (Math.max(config.radius, 1) * viewportScale * worldPerPx) / worldScale;
       pushAccel = 26 * config.strength;
-      shove = Math.min(pointerSpeed / 900, 2) * 14 * config.strength;
+      shove = Math.min(pointerSpeed / (900 * viewportScale), 2) * 14 * config.strength;
       camera.matrixWorld.extractBasis(camRight, camUp, camBack);
       localShove
         .set(0, 0, 0)

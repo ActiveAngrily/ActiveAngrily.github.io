@@ -4,8 +4,8 @@ import { memo, useState } from "react";
 import { ParticleObject } from "./particle-object";
 
 const settings = {
-  count: 16000,
-  size: 2.8,
+  count: 10500,
+  size: 4.2,
   sizeVariance: 0.8,
   radius: 105,
   strength: 0.1,
