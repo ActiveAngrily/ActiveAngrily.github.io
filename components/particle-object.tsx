@@ -858,4 +858,3 @@ export function ParticleObject({
     </div>
   );
 }
-

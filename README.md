@@ -50,15 +50,24 @@ Alternatively, upload `out/` directly to a static host. The archived design expl
 
 This repository already uses GitHub Actions for Pages and the custom domain `anantjamuar.me`. `public/CNAME` preserves that domain.
 
-The **Build and deploy portfolio** workflow builds this branch on push and uploads a `github-pages` artifact. Publishing runs only when you manually dispatch the workflow.
+The **Build and deploy portfolio** workflow runs on pushes to `redesign-minimal` and `main`. Each successful build produces two artifacts, retained for 30 days:
 
-For the new manual workflow to appear in GitHub's **Run workflow** menu, `.github/workflows/deploy.yml` must also exist on the repository's default branch. When ready to publish, either make `redesign-minimal` the default branch or add this workflow file to the existing default branch. Then:
+- **portfolio-static**: contains `portfolio-static.zip`, with `index.html` and all assets at the archive root. Download from the workflow run’s **Artifacts** section and unzip it to use on a static host.
+- **github-pages**: the Pages-specific package consumed directly by `actions/deploy-pages`.
 
-1. Keep **Settings → Pages → Source** set to **GitHub Actions**.
-2. Ensure the `github-pages` environment allows deployments from `redesign-minimal`.
-3. Open **Actions → Build and deploy portfolio → Run workflow** and select `redesign-minimal`.
+### Publishing the redesign
 
-A manual deployment replaces the website at the existing custom domain. Pushing this branch only builds the export.
+The repository already has Pages set to **GitHub Actions**. The workflow publishes only from `main`.
+
+1. Replace the contents of `main` with this branch’s complete tree when ready. Do not retain the old site files or old deployment workflows.
+2. Push that replacement commit to `main`.
+3. The workflow builds and deploys to https://anantjamuar.me automatically. Its deployment job reports the live URL.
+
+Keep the `github-pages` environment’s deployment rule set to allow `main`. Once this workflow exists on `main`, **Actions → Build and deploy portfolio → Run workflow → main** can also rebuild and redeploy manually.
+
+Pushing `redesign-minimal` produces the artifacts and leaves the current live site in place. There are no deploy tokens or additional secrets to configure.
+
+Implementation follows [GitHub’s custom Pages workflow documentation](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages).
 
 ## Editing
 

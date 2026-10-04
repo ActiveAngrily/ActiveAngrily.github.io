@@ -13,4 +13,3 @@ Use case: stylized-concept. Asset type: abstract art for a minimal personal port
 ## Open spiral
 
 Use case: stylized-concept. Asset type: abstract art for a minimal personal portfolio, later sampled into particles. One isolated sculptural object, transparent background with real alpha, no floor, pedestal, frame, text or watermark. Palette exclusively mist blue #dbe5ee, muted blue #8baac2, slate blue #4e7395 and ivory highlights. Opaque satin surfaces with readable silhouette, generous negative space around entire form, quiet poetic precision. Subject: Open spiral. An elongated sculptural helix made from a continuous tapered blade that sweeps around an empty center in two loose turns, its ends unfurling in different directions. An expressive calligraphic gesture with crisp folded edges and softly curved surfaces. Three-quarter studio render, horizontally balanced, a strong airy silhouette. No closed knot, sphere or mechanical spring.
-
